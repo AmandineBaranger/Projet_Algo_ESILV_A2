@@ -1,3 +1,3 @@
 # Projet_Algo_ESILV_A2
 
-Ceci est un test, puis un autre
+Ceci est un test
