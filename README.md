@@ -2,7 +2,7 @@
 
 ## TODOS
 [ ] Developpez le Program !
-- [ ] Mercury
+[ ] Mercury
 - [x] Venus
 - [x] Earth (Orbit/Moon)
 - [x] Mars
