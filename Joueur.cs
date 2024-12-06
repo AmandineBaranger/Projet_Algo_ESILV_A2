@@ -6,6 +6,7 @@ public class Joueur
     private int score;
     private List<string> motsTrouvés = new List<string>();
 
+
     //Constructeur
     public Joueur(string nom)
     {
@@ -41,3 +42,4 @@ public class Joueur
         return $"Joueur: {nom}, Score: {score}, Mots trouvés: {string.Join(", ", motsTrouvés)}";
     }
 }
+
