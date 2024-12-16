@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+
+namespace Boogle{
 public class Dictionnaire{
     private string langue;
     private List<string> listeMots;
@@ -110,4 +112,5 @@ public class Dictionnaire{
                 return RechDichoRecursif(pMot, pLangue, a, milieu-1);
         }
     }
+}
 }
