@@ -1,73 +1,113 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
-public class Dictionnaire
-{
-    private List<string> mots;
+using System.Runtime.CompilerServices;
+public class Dictionnaire{
     private string langue;
+    private List<string> listeMots;
 
-    // Constructeur
-    public Dictionnaire(string fichier, string langue)
-    {
-        this.langue = langue;
-        mots = new List<string>(File.ReadLines(fichier)); // Lecture lignes + stockage dans liste
-        mots.Sort(); // Facilitation recherche dichotomique grâce au tri
-    }
-    // Méthode 
-    public override string ToString()
-    {
-        // Création du dictionnaire trié par longueur
-        Dictionary<int, int> motsParLongueur = new Dictionary<int, int>(); // définition des génériques (clé + valeur) en tant qu'entier
-        //Compter nb mots pour chaque longueur mot dans liste mots
-        //Parcourt chaque mot + calcule sa longueur + met à jour dico (clé = longueur du mot + valeur = nb mots dans ce groupe de cette longueur)
-        foreach (string mot in mots)
+    public string Langue{get; set; }
+    public List<string> ListeMots{get; set; }
+    
+    // couples nombre de lettres / nombre de mots ayant ce nombre de lettres 
+    Dictionary<int,int> nombreMotsParLongueur = new Dictionary<int, int>();
+    
+    // couples lettre / nombre de mots commencant par cette lettre
+    Dictionary<string,int> nombreMotsParLettre = new Dictionary<string, int>();
+    public Dictionnaire(string pLangue, string pCheminAcces){
+        // gestion de la langue du dictionnaire
+        // TODO gerer le cas ou ce n'est pas FR ou EN
+        if(pLangue=="FR"||pLangue=="EN")
         {
-            int longueur = mot.Length;
-            if (motsParLongueur.ContainsKey(longueur))
+            Langue=pLangue;
+        }
+        ListeMots = new List<string>();
+        
+        string[] lignes = File.ReadAllLines(pCheminAcces);
+        
+        char[] delimiters ={' ', '\n', '\r', '\t' };
+        
+        foreach (string ligne in lignes)
+        {
+            string[] motsLigne = ligne.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+            foreach(string mot in motsLigne)
             {
-                motsParLongueur[longueur]++;
+                string motPropre = mot.Trim().ToUpper();
+                if (!string.IsNullOrEmpty(motPropre))
+                {
+                    // on ajoute dans le liste de mots du dictionnaire
+                    ListeMots.Add(motPropre);
+                    // gestion de la taille/ nbre de mots
+                    int longueur=motPropre.Length;
+                    // si il y a déjà au moins un mot de cette taille, la clé existe, on ajoute 1
+                    int val;
+                    if (nombreMotsParLongueur.TryGetValue(longueur, out val)) {
+                        nombreMotsParLongueur[longueur] = val+1;
+
+                    }
+                    // sinon, il faut créer l'entrée avec la longueur et le nbre de mot à 1
+                    else 
+                    {
+                        nombreMotsParLongueur.Add(longueur, 1);
+                    }
+                    //on va regarder par lettre maintenant
+                    string preLettre = motPropre.Substring(0, 1);
+                    if(nombreMotsParLettre.TryGetValue(preLettre, out val))
+                    {
+                        nombreMotsParLettre[preLettre] = val+1;
+                    }
+                    else
+                    {
+                        nombreMotsParLettre.Add(preLettre,1);
+                    }
+                }
             }
-            else
-            {
-                motsParLongueur[longueur] = 1;
-            }
         }
-        string description = $"Langue : {langue}\nNombre total de mots : {mots.Count}\n";
-        description += "Mots par longueur :\n";
-        //Parcourt chaque élément du dico + ajout description chaque entrée à description (chaîne de texte)
-        foreach (var entry in motsParLongueur)
-        {
-            description += $"  Longueur {entry.Key} : {entry.Value} mots\n";
-        }
-        return description;
+        ListeMots.Sort(StringComparer.OrdinalIgnoreCase);
     }
-    // Recherche Dichotomique récursive
-    public bool RechDichoRecursif(string mot)
-    {
-        return RechDichoRecursifAide(mots, mot, 0, mots.Count - 1);
-    }
-    // Vérification mot donné dans une liste triée
-    private bool RechDichoRecursifAide(List<string> list, string mot, int debut, int fin)
-    {
-        if (debut > fin)
+
+    public string toString(){
+        string res=$"Nombre de mots par longueur : \n";
+        // parcours du dictionnaire longueur/nbre de mots
+        foreach (var element in nombreMotsParLongueur) 
         {
-            return false; //mot pas trouvé
-        } 
-        int milieu = (debut + fin) / 2;
-        if (list[milieu] == mot)
-        {
-            return true; // mot trouvé
+            res += $"Longueur : {element.Key}         Nombre de mots : {element.Value}\n";
         }
-        // Cette division des cas permet à mon algorithme d'éliminer plus facilement la moitié des éléments donc le temps de recherche --> optimisation
-        if (string.Compare(mot, list[milieu]) < 0)
+        res+=$"\nNombre de mots par lettre : \n";
+        foreach (var element in nombreMotsParLettre) 
         {
-            return RechDichoRecursifAide(list, mot, debut, milieu - 1); // Cherche dans la moitié gauche
+            res += $"Lettre : {element.Key}         Nombre de mots : {element.Value}\n";
+        }
+        res+=$"\nLangue : {Langue}\n";
+        return res;
+    }
+    
+    public bool RechDichoRecursif(string pMot, string pLangue,int a, int b)
+    {    
+        if(a>b)
+        {
+            return false;
+        }
+        int milieu=0;   
+        if((a+b)%2==0)
+        {
+            milieu = (a+b)/2;
         }
         else
         {
-            return RechDichoRecursifAide(list, mot, milieu + 1, fin); // Cherche dans la moitié droite
+            milieu = (a+b+1)/2;
+        }
+        int comparaison = string.Compare(pMot, ListeMots[milieu], StringComparison.OrdinalIgnoreCase);
+        switch(comparaison)
+        {
+            //égal à 0 : on a trouvé notre mot
+            case 0:
+                return true;
+            //sup à 0 : mot a (celui qu'on cherche) après mot b(mot consulté dans le dico - mot du milieu)
+            case >0:
+                return RechDichoRecursif(pMot, pLangue, milieu+1, b);
+            //inf à 0 : mot a (celui qu'on cherche) avant mot b(mot consulté dans le dico - mot du milieu)
+            case <0:
+                return RechDichoRecursif(pMot, pLangue, a, milieu-1);
         }
     }
 }

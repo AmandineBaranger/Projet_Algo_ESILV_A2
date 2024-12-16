@@ -39,7 +39,7 @@ public class Joueur
     //Méthode qui retourne le string et donc les infos du joueur
     public override string ToString()
     {
-        return $"Joueur: {nom}, Score: {score}, Mots trouvés: {string.Join(", ", motsTrouvés)}";
+        return $"Joueur: {nom}, Score: {score}, Mots trouvés: {string.Join(", ", motsTrouvés)}\n";
     }
 }
 
