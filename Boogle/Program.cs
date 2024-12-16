@@ -18,7 +18,37 @@ class Program
 
         De new_de = new De(charArray) ;
         Console.Write("Hellowordl \n");
-        Console.Write(new_de.toString());
+        Console.WriteLine(new_de.toString());
+
+        Random random = new Random();
+        char[][] lettresPourDes = new char[16][]
+        {
+            new char[] { 'A', 'B', 'C', 'D', 'E', 'F' },
+            new char[] { 'G', 'H', 'I', 'J', 'K', 'L' },
+            new char[] { 'M', 'N', 'O', 'P', 'Q', 'R' },
+            new char[] { 'S', 'T', 'U', 'V', 'W', 'X' },
+            new char[] { 'Y', 'Z', 'A', 'B', 'C', 'D' },
+            new char[] { 'E', 'F', 'G', 'H', 'I', 'J' },
+            new char[] { 'K', 'L', 'M', 'N', 'O', 'P' },
+            new char[] { 'Q', 'R', 'S', 'T', 'U', 'V' },
+            new char[] { 'W', 'X', 'Y', 'Z', 'A', 'B' },
+            new char[] { 'C', 'D', 'E', 'F', 'G', 'H' },
+            new char[] { 'I', 'J', 'K', 'L', 'M', 'N' },
+            new char[] { 'O', 'P', 'Q', 'R', 'S', 'T' },
+            new char[] { 'U', 'V', 'W', 'X', 'Y', 'Z' },
+            new char[] { 'A', 'B', 'C', 'D', 'E', 'F' },
+            new char[] { 'G', 'H', 'I', 'J', 'K', 'L' },
+            new char[] { 'M', 'N', 'O', 'P', 'Q', 'R' }
+        };
+
+        Plateau plateau = new Plateau(random, lettresPourDes);
+        Console.WriteLine("Plateau généré :");
+        Console.WriteLine(plateau.toString());
+
+        string mot = "ABCD";
+        bool estPresent = plateau.Test_Plateau(mot);
+        Console.WriteLine($"Le mot '{mot}' est-il présent ? {estPresent}");
+
 
         //Partie Inès : 
         Joueur joueur = new Joueur("Alice");

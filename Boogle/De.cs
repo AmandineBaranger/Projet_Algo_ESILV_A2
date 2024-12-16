@@ -24,7 +24,7 @@ namespace Boogle
             faceVisible = lettres[0];
         }
 
-        // Accesseur pour récupérer la face visible du dé.
+        // Accesseur pour récupérer la face visible du dé et le tableau qui contient toutes les faces du tableau 
         public char FaceVisible
         {
             get { return faceVisible; }
