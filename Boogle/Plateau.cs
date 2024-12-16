@@ -2,18 +2,19 @@ namespace Boogle
 {
     public class Plateau
     {
-        private const int TAILLE = 4;
+        private int TAILLE = 4;
         private De[,] des;
 
-        public Plateau(Random random, char[][] lettresPourDes)
+        public Plateau(Random random, string cheminFichier, int TAILLEgrille)
         {
+            this.TAILLE = TAILLEgrille;
             des = new De[TAILLE,TAILLE];
 
             for(int i = 0; i<TAILLE; i++)
             {
                 for(int j = 0; j<TAILLE; j++)
                 {
-                    des[i,j] = new De(lettresPourDes[i * TAILLE + j]);
+                    des[i,j] = new De(cheminFichier,random);
                     des[i,j].Lance(random);
                 }
             }

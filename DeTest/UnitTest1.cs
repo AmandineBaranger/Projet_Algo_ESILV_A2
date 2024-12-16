@@ -6,44 +6,39 @@ namespace DeTests
 {
     public class UnitTest1
     {
-        [Fact]
-        public void Constructor_ShouldThrowException_WhenGivenNullArray()
-        {
-            // Arrange
-            char[] nullArray = null;
+        private readonly Random random = new Random();
+        private const string TestFichier = "TestLettres.txt";
 
-            // Act & Assert
-            Assert.Throws<ArgumentException>(() => new De(nullArray));
+        // Méthode pour générer un fichier de test temporaire
+        private void CreerFichierDeTest()
+        {
+            string contenu = "A;1;3\nB;1;2\nC;1;4\nD;1;1";
+            File.WriteAllText(TestFichier, contenu);
         }
 
         [Fact]
-        public void Constructor_ShouldThrowException_WhenGivenArrayWithWrongLength()
+        public void Constructeur_InitialiseCorrectementAvecFichier()
         {
             // Arrange
-            char[] shortArray = new char[5];
-
-            // Act & Assert
-            Assert.Throws<ArgumentException>(() => new De(shortArray));
-        }
-
-        [Fact]
-        public void Lance_ShouldChangeFaceVisible()
-        {
-            // Arrange
-            //var random = new Mock<Random>();
-            //random.SetupSequence(r => r.Next(6)).Returns(1).Returns(4);
-            //var de = new De(new char[] { 'a', 'b', 'c', 'd', 'e', 'f' });
+            CreerFichierDeTest();
 
             // Act
-            //de.Lance(Random.Object);
-            //var firstFace = de.FaceVisible;
-            //de.Lance(random.Object);
-            //var secondFace = de.FaceVisible;
+            De de = new De(TestFichier, random);
 
             // Assert
-            //Assert.NotEqual(firstFace, secondFace);
-            //Assert.Equal('b', firstFace);
-            Assert.Equal('e', 'e');
+            Assert.Equal(6, de.Lettres.Length); // Le dé doit avoir 6 faces
+            Assert.Contains(de.FaceVisible, de.Lettres); //La face visible doit appartenir à une des faces du de
         }
+
+        [Fact]
+        public void Constructeur_ThrowsException_SiFichierIntrouvable()
+        {
+            // Arrange
+            string cheminInvalide = "FichierIntrouvable.txt";
+
+            // Act & Assert
+            Assert.Throws<FileNotFoundException>(() => new De(cheminInvalide, random));
+        }
+        
     }
 }
