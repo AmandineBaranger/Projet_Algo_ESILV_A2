@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Projet_Algo_ESILV_A2", "Projet_Algo_ESILV_A2.csproj", "{4DFEADA9-5FE5-4056-A60C-454BB75DC78C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeTest", "DeTest\DeTest.csproj", "{F4F22B6A-9268-4B77-AB9A-80C2597D8CD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boogle", "Boogle\Boogle.csproj", "{64D27A69-F0F6-4874-BF4C-7AC8AE493E5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4DFEADA9-5FE5-4056-A60C-454BB75DC78C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4DFEADA9-5FE5-4056-A60C-454BB75DC78C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4DFEADA9-5FE5-4056-A60C-454BB75DC78C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4DFEADA9-5FE5-4056-A60C-454BB75DC78C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4F22B6A-9268-4B77-AB9A-80C2597D8CD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4F22B6A-9268-4B77-AB9A-80C2597D8CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4F22B6A-9268-4B77-AB9A-80C2597D8CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4F22B6A-9268-4B77-AB9A-80C2597D8CD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64D27A69-F0F6-4874-BF4C-7AC8AE493E5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64D27A69-F0F6-4874-BF4C-7AC8AE493E5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64D27A69-F0F6-4874-BF4C-7AC8AE493E5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64D27A69-F0F6-4874-BF4C-7AC8AE493E5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
