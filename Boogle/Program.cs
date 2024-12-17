@@ -8,6 +8,7 @@ class Program
     {
         
         
+        
          try
             {
                 // Initialisation des variables
